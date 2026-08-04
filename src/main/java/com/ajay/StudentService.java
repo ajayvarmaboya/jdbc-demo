@@ -40,12 +40,19 @@ public class StudentService {
 
     public List<Student> getAllStudents()throws SQLException{
         validateStudent(null); // This will throw an exception if called with null
-            return dao.getAllStudents();
+        return dao.getAllStudents();
         
     }
 
     public int updateStudent(Student student) throws SQLException {
-    validateStudent(student);
-    return dao.updateStudent(student);
-}
+        validateStudent(student);
+        return dao.updateStudent(student);
+    }
+
+    public int deleteStudent(int courseId) throws SQLException {
+        if(courseId<=0){
+            throw new IllegalArgumentException("Course id is invalid");
+        }
+        return dao.deleteStudent(courseId);
+    }
 }

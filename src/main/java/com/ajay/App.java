@@ -1,120 +1,134 @@
 package com.ajay;
+import java.util.List;
+import java.sql.SQLException;
+import java.util.Scanner;
 
-import java.sql.*;
-import java.util.Arrays;
-public class App 
-{
-    public static void main( String[] args ) throws Exception
-    {
-        Class.forName("org.postgresql.Driver");
-        Connection con=DriverManager.getConnection("jdbc:postgresql://localhost:5432/Students","postgres","Ajay@2025");
-        con.setAutoCommit(false);
-        
-        
-        //PreparedStatement ps = con.prepareStatement("select * from training");
-        //ResultSet rs = ps.executeQuery();
-        //while(rs.next()){
-            //System.out.println(rs.getInt("courseid")+" "+
-                            //rs.getString("name")+" "+
-                            //rs.getBoolean("fee")+" "+
-                            //rs.getString("department")+" "+
-                            //rs.getString("course_name")
-            //);
-        //}
-        //rs.close();
-        //PreparedStatement ps1 = con.prepareStatement("delete from training where courseid=?");
-        //ps1.setInt(1, 4);
-        //int rowsDeleted = ps1.executeUpdate();
-        //System.out.println(rowsDeleted+" row(s) deleted");
-        //ps.close();
-        //ps1.close();
-//
+public class App {
 
-        
-        
-        //st.close();
+    public static void main(String[] args) {
 
-        //PreparedStatement ps2 = con.prepareStatement("update training set name=? where courseid=?");
-        //ps2.setString(1, "Spring Boot");
-        //ps2.setInt(2,1);
-        //ps2.executeUpdate();
-        //con.commit();
-        //System.out.println("Record updated successfully");
-        // try {
+        Scanner sc = new Scanner(System.in);
 
-//     PreparedStatement ps = con.prepareStatement(
-//         "UPDATE training SET course_name=? WHERE courseid=?"
-//     );
+        StudentService service = new StudentService();
 
-//     ps.setString(1, "Spring Boot");
-//     ps.setInt(2, 1);
-//     ps.executeUpdate();
+        while (true) {
 
-//     System.out.println("First Update Done");
+            System.out.println("\n==============================");
+            System.out.println(" STUDENT MANAGEMENT SYSTEM");
+            System.out.println("==============================");
+            System.out.println("1. Add Student");
+            System.out.println("2. View Student");
+            System.out.println("3. View All Students");
+            System.out.println("4. Update Student");
+            System.out.println("5. Delete Student");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice : ");
 
-//     int x = 10 / 0;     // Force an error
+            int choice = sc.nextInt();
+            sc.nextLine();
 
-//     ps.setString(1, "AI");
-//     ps.setInt(2, 2);
-//     ps.executeUpdate();
+            switch (choice) {
 
-//     con.commit();
+                case 1:
+                    System.out.println("\\n========== Add Student ==========");
 
-// }
-//     catch (Exception e) {
+                    try{
+                        
+                        System.out.print("Enter Course ID: ");
+                        int courseId = sc.nextInt();
+                        sc.nextLine();
 
-//         con.rollback();
+                        System.out.print("Enter Student Name: ");
+                        String name = sc.nextLine();
 
-//         System.out.println("Transaction Rolled Back");
+                        System.out.print("Has Paid Fee (true/false): ");
+                        boolean fee = sc.nextBoolean();
+                        sc.nextLine();
 
-//     }/
+                        System.out.print("Enter Course: ");
+                        String course = sc.nextLine();
 
+                        System.out.print("Enter Course Name: ");
+                        String courseName = sc.nextLine();
 
-// Batch processing
-        PreparedStatement ps= con.prepareStatement("update training set course=?,course_name=? where name=?");
+                        Student student = new Student(courseId, name, fee, course, courseName);
 
-        
-        
-        
-        ps.setString(1,"DA&ML");
-        ps.setString(2,"DAwithml");
-        ps.setString(3,"siva");
-        ps.addBatch();
+                        int rowsAffected = service.addStudent(student);
+                        if (rowsAffected > 0) {
+                            System.out.println("Student added successfully!");
+                        } else {
+                            System.out.println("Failed to add student.");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    } catch (SQLException e) {
+                        System.out.println("Database error: " + e.getMessage());
+                    }
+                    break;
 
-        ps.setString(1,"MLops&AI");
-        ps.setString(2,"MLopswithAI");
-        ps.setString(3,"sai");
-        
-        
-        
-        ps.addBatch();
+                case 2:
+                    System.out.println("\n========== View Student ==========");
 
+                    try{
+                        System.out.print("Enter course ID");
 
+                        int courseId=sc.nextInt();
+                        sc.nextLine();
 
-        int[] results = ps.executeBatch();
-con.commit();
+                        Student student=service.getStudentById(courseId);
+                        if(student!=null){
+                            System.out.println("\nStudent Found");
+                            System.out.println(student);
+                        }
+                        else{
+                            System.out.println("\nStudent Not Found with Course ID:"+courseId);
+                        }
+                    }
+                    catch(IllegalArgumentException e){
+                        System.out.println("Error:"+e.getMessage());
+                    }
+                    catch(SQLException e){
+                        System.out.println("Database error:"+e.getMessage());
+                    }
+                    break;
 
-System.out.println(Arrays.toString(results));
+                case 3:
+                    System.out.println("\n========== View All Students ==========");
 
-        PreparedStatement ps1 = con.prepareStatement("select * from training");
-        ResultSet rs1 = ps1.executeQuery();
-        ResultSet rs = ps1.executeQuery();
+                    try{
+                        List<Student> students=service.getAllStudents();
+                        if(students.isEmpty()){
+                            System.out.println("\nNo Students Found");
+                        }
+                        else{
+                            System.out.println("\nAll Students:");
+                            for(Student student:students){
+                                System.out.println(student);
+                            }
+                        }
+                    }
+                    catch(SQLException e){
+                        System.out.println("Database error:"+e.getMessage());
+                    }
+                    break;
 
-while (rs.next()) {
-    System.out.println(
-        rs.getInt("courseid") + " " +
-        rs.getString("name") + " " +
-        rs.getBoolean("fee") + " " +
-        rs.getString("course") + " " +
-        rs.getString("course_name")
-    );
-}
+                case 4:
+                    break;
 
-rs.close();
+                case 5:
+                    break;
 
-        
-        ps.close();
-        ps1.close();
-        con.close();
+                case 6:
+                    System.out.println("Thank You!");
+                    sc.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid Choice");
+            }
+
+        }
+
     }
+
 }
