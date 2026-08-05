@@ -113,9 +113,151 @@ public class App {
                     break;
 
                 case 4:
-                    break;
+                    System.out.println("\n========== Update Student ==========");
 
+                    try{
+                        System.out.print("Enter course ID of the student to update:");
+
+                        int courseId=sc.nextInt();
+                        sc.nextLine();
+
+                        Student existingStudent=service.getStudentById(courseId);
+                        if(existingStudent==null){
+                            System.out.println("\nStudent not found with Course Id:"+courseId);
+                        }
+                        else{
+                            System.out.println("\nExisting Student Details:");
+                            System.out.println(existingStudent);
+
+                            System.out.println("\nEnter new details (leave blank to keep existing):");
+
+                            System.out.println("\n========== Update Menu ==========");
+                            System.out.println("1. Update Name");
+                            System.out.println("2. Update Fee Status");
+                            System.out.println("3. Update Course");
+                            System.out.println("4. Update Course Name");
+                            System.out.println("5. Update All Fields");
+                            System.out.println("6. Cancel");
+
+                            System.out.print("Enter your choice: ");
+                            int updateChoice = sc.nextInt();
+                            sc.nextLine();
+
+                            switch (updateChoice) {
+
+                                case 1:
+                                    System.out.print("Enter new name:");
+                                    existingStudent.setName(sc.nextLine());
+                                                       
+                                    break;
+                                
+                                case 2:
+                                    System.out.print("Has Paid Fee (true/false):");
+                                    existingStudent.setFee(sc.nextBoolean());
+                                    sc.nextLine();
+                                    break;
+                                
+                                case 3:
+                                    System.out.print("Enter new course");
+                                    existingStudent.setCourse(sc.nextLine());
+                                    break;
+                                
+                                case 4:
+                                    System.out.print("Enter new course name");
+                                    existingStudent.setCourseName(sc.nextLine());
+                                    break;
+                                
+                                case 5:
+                                    System.out.print("Enter new name:");
+                                    existingStudent.setName(sc.nextLine());
+
+                                    System.out.print("Has Paid Fee (true/false):");
+                                    existingStudent.setFee(sc.nextBoolean());
+                                    sc.nextLine();
+
+                                    System.out.print("Enter new course:");
+                                    existingStudent.setCourse(sc.nextLine());
+
+                                    System.out.print("Enter new course name:");
+                                    existingStudent.setCourseName(sc.nextLine());
+                                    break;
+                                
+                                case 6:
+                                    System.out.println("Update cancelled.");
+                                    break;
+                                
+
+                            
+                                default:
+                                    System.out.println("Invalid choice. Update cancelled.");
+                                    break;
+                                
+                            }
+                            if(updateChoice>=1 && updateChoice<=5){
+                                int rows=service.updateStudent(existingStudent);
+                                if(rows>0){
+                                    System.out.println("\nStudent updated successfully.\n");
+
+                                    System.out.println("Updated Student Details");
+                                    System.out.println("-------------------------");
+                                    System.out.println("Course ID   : " + existingStudent.getCourseId());
+                                    System.out.println("Name        : " + existingStudent.getName());
+                                    System.out.println("Fee Paid    : " + existingStudent.isFee());
+                                    System.out.println("Course      : " + existingStudent.getCourse());
+                                    System.out.println("Course Name : " + existingStudent.getCourseName());
+
+                                }
+                                   
+                            }else{
+                                    System.out.println("\nFailed to update student.");
+                                }
+                            }
+
+                        }catch(IllegalArgumentException e){
+                        System.out.println("Error:"+e.getMessage());
+                        }
+                        catch(SQLException e){
+                            System.out.println("Database error:"+e.getMessage());
+                        }
+                    break;
                 case 5:
+
+                    System.out.println("\n========== Delete Student ==========");
+
+                    try{
+                        System.out.print("Enter course ID of the student to delete:");
+                        int courseId=sc.nextInt();
+                        sc.nextLine();
+
+                        Student existingStudent=service.getStudentById(courseId);
+                        if(existingStudent==null){
+                            System.out.println("\nStudent not found with Course Id:"+courseId);
+                        }
+                        else{
+                            System.out.println(existingStudent);
+
+                            System.out.print("Are you sure? (Y/N): ");
+                            char confirm =sc.next().toUpperCase().charAt(0);
+                            if(confirm=='Y'){
+                                int rows=service.deleteStudent(courseId);
+                                if(rows>0){
+                                    System.out.println("\nStudent deleted successfully.");
+                                }
+                                else{
+                                    System.out.println("\nFailed to delete student.");
+                                }
+                            }
+                            else{
+                                System.out.println("\nDelete operation cancelled.");
+                            }
+                        }
+                    }
+                    catch(IllegalArgumentException e){
+                        System.out.println("Error:"+e.getMessage());
+                    }
+                    catch(SQLException e){
+                        System.out.println("Database error:"+e.getMessage());
+                    }
                     break;
 
                 case 6:
