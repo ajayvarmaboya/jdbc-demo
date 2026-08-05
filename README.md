@@ -1,58 +1,64 @@
 # JDBC Student Management System
 
-A layered Java console application built using **JDBC** and **PostgreSQL** to demonstrate enterprise-style backend architecture without using frameworks like Spring Boot.
+A complete Java console application built using **JDBC** and **PostgreSQL** following an enterprise-style layered architecture. This project demonstrates how Java applications interact with relational databases without using frameworks like Spring Boot.
 
 ---
 
-## 📖 Project Overview
+# Project Overview
 
-This project was developed as a learning journey to understand how Java applications communicate with relational databases using JDBC.
+The objective of this project is to understand JDBC from the ground up by manually implementing every layer of a backend application.
 
-The application follows a clean layered architecture consisting of:
+Instead of relying on frameworks, this project builds everything using plain Java:
 
 - Presentation Layer
 - Service Layer
-- Data Access Layer (DAO)
-- Database Layer
+- DAO Layer
+- Database Connection Layer
 
-The objective is to master JDBC fundamentals before moving to Spring Boot.
+The project serves as a strong foundation before learning Spring Boot.
 
 ---
 
-## 🚀 Features
+# Features
 
-### ✅ Implemented
+## Student Management
 
-- Add Student
-- View Student by Course ID
-- Service Layer Validation
-- DAO Layer
+- ✅ Add Student
+- ✅ View Student by Course ID
+- ✅ View All Students
+- ✅ Update Student
+- ✅ Delete Student
+
+---
+
+## Application Features
+
+- Menu Driven Console Application
+- Layered Architecture
+- Input Validation
+- Service Layer
+- DAO Pattern
+- Exception Handling
+- try-with-resources
 - PostgreSQL Integration
 - PreparedStatement
-- Exception Handling
-- Layered Architecture
-- Try-With-Resources
-- CRUD Structure
-
-### 🚧 In Progress
-
-- View All Students
-- Update Student
-- Delete Student
-
-### 📌 Planned
-
-- Transactions
-- Batch Processing
-- Interfaces
-- Custom Exceptions
-- Logging
-- Properties File Configuration
-- JDBC Interview Preparation
+- Clean Separation of Concerns
 
 ---
 
-## 🏗️ Project Structure
+# Technologies Used
+
+- Java 21
+- JDBC
+- PostgreSQL
+- Maven
+- Git
+- GitHub
+- VS Code
+
+---
+
+# Project Structure
 
 ```
 jdbc-demo
@@ -70,55 +76,111 @@ jdbc-demo
 
 ---
 
-## 🏛️ Application Architecture
+# Application Architecture
 
 ```
-                 User
-                   │
-                   ▼
-              App.java
-       (Presentation Layer)
-                   │
-                   ▼
-          StudentService
-        (Business Layer)
-                   │
-                   ▼
-            StudentDAO
-     (Persistence Layer)
-                   │
-                   ▼
-          DBConnection
-                   │
-                   ▼
-            PostgreSQL
+                    User
+                      │
+                      ▼
+                 App.java
+          (Presentation Layer)
+                      │
+                      ▼
+             StudentService
+            (Business Layer)
+                      │
+                      ▼
+              StudentDAO
+         (Persistence Layer)
+                      │
+                      ▼
+             DBConnection
+                      │
+                      ▼
+               PostgreSQL
 ```
 
 ---
 
-## 🛠️ Technologies Used
+# Database Schema
 
-- Java 21
-- JDBC
-- PostgreSQL
-- Maven
-- VS Code
-- Git & GitHub
+Table Name
+
+```
+training
+```
+
+| Column | Data Type |
+|----------|-----------|
+| courseId | INTEGER (Primary Key) |
+| name | VARCHAR |
+| fee | BOOLEAN |
+| course | VARCHAR |
+| courseName | VARCHAR |
 
 ---
 
-## 📚 Concepts Covered
+# CRUD Operations
 
-### Java
+## Create
 
-- Classes & Objects
+Insert a new student into the database.
+
+Uses
+
+- PreparedStatement
+- executeUpdate()
+
+---
+
+## Read
+
+Retrieve
+
+- Single Student
+- All Students
+
+Uses
+
+- executeQuery()
+- ResultSet
+
+---
+
+## Update
+
+- Search student by Course ID
+- Display existing details
+- Update selected field(s)
+- Save updated record
+
+---
+
+## Delete
+
+- Search student
+- Display details
+- Confirmation before deletion
+- Delete record
+
+---
+
+# Concepts Covered
+
+## Core Java
+
+- Classes
+- Objects
 - Encapsulation
 - Composition
 - Exception Handling
 - Collections
-- OOP Principles
+- Enhanced For Loop
+- Scanner
 
-### JDBC
+---
+
+## JDBC
 
 - DriverManager
 - Connection
@@ -129,69 +191,31 @@ jdbc-demo
 - try-with-resources
 - SQLException
 
-### SQL
+---
+
+## SQL
 
 - INSERT
 - SELECT
 - UPDATE
 - DELETE
 
-### Software Engineering
+---
 
+## Software Engineering
+
+- Layered Architecture
 - DAO Pattern
 - Service Layer
-- Layered Architecture
 - Separation of Concerns
 - DRY Principle
+- Validation
+- Defensive Programming
 - Exception Propagation
 
 ---
 
-## 📂 Database
-
-Table: **training**
-
-| Column | Type |
-|---------|------|
-| courseId | INTEGER |
-| name | VARCHAR |
-| fee | BOOLEAN |
-| course | VARCHAR |
-| courseName | VARCHAR |
-
----
-
-## ▶️ How to Run
-
-### Clone Repository
-
-```bash
-git clone https://github.com/ajayvarmaboya/jdbc-demo.git
-```
-
-### Open Project
-
-```
-Import as Maven Project
-```
-
-### Configure PostgreSQL
-
-Update database credentials inside:
-
-```
-DBConnection.java
-```
-
-### Run
-
-```
-App.java
-```
-
----
-
-## 📸 Current Console Menu
+# Console Menu
 
 ```
 ==============================
@@ -208,63 +232,110 @@ App.java
 
 ---
 
-## 🎯 Learning Objectives
+# Project Workflow
 
-This project is designed to understand:
+```
+User
 
-- How JDBC works internally
-- Database communication using Java
-- Layered application architecture
-- Clean code practices
-- Enterprise backend fundamentals
-- Transition path to Spring Boot
+↓
+
+App.java
+
+↓
+
+StudentService
+
+↓
+
+StudentDAO
+
+↓
+
+DBConnection
+
+↓
+
+PostgreSQL
+```
+
+Every user request follows this workflow.
 
 ---
 
-## 📈 Current Progress
+# Current Project Status
 
 | Module | Status |
-|---------|--------|
-| Database Setup | ✅ |
-| JDBC Configuration | ✅ |
-| Student Model | ✅ |
-| DAO Layer | ✅ |
-| Service Layer | ✅ |
-| Menu Driven Console | ✅ |
-| Add Student | ✅ |
-| View Student | ✅ |
-| View All Students | 🚧 |
-| Update Student | 🚧 |
-| Delete Student | 🚧 |
-| Transactions | ⏳ |
-| Batch Processing | ⏳ |
+|----------|--------|
+| PostgreSQL Database | ✅ Completed |
+| Student Model | ✅ Completed |
+| DBConnection | ✅ Completed |
+| DAO Layer | ✅ Completed |
+| Service Layer | ✅ Completed |
+| Presentation Layer | ✅ Completed |
+| CRUD Operations | ✅ Completed |
 
 ---
 
-## 👨‍💻 Author
+# Upcoming Improvements
 
-**Boya Ajay Varma**
+The project will continue with enterprise JDBC concepts.
 
-GitHub: https://github.com/ajayvarmaboya
+## Enterprise Refactoring
+
+- StudentDAO Interface
+- StudentDAOImpl
+- StudentService Interface
+- StudentServiceImpl
+- Constructor Dependency Injection
 
 ---
 
-## ⭐ Future Enhancements
+## Advanced JDBC
 
-- Complete CRUD Operations
-- Transaction Management
+- Transactions
 - Batch Processing
 - Properties File
 - Logging
 - Custom Exceptions
-- DAO Interfaces
-- Service Interfaces
-- Connection Pooling
-- Unit Testing (JUnit)
-- Migration to Spring Boot
 
 ---
 
-## 📜 License
+## Future Migration
 
-This project is developed for educational purposes to strengthen Java Backend and JDBC fundamentals.
+After completing advanced JDBC topics, this project will be rebuilt using
+
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- REST APIs
+
+to understand how frameworks simplify the same architecture.
+
+---
+
+# Learning Outcomes
+
+This project demonstrates practical understanding of
+
+- JDBC Architecture
+- Layered Application Design
+- Database Communication
+- CRUD Operations
+- Object-Oriented Programming
+- Enterprise Coding Practices
+
+---
+
+# Author
+
+**Boya Ajay Varma**
+
+GitHub
+
+https://github.com/ajayvarmaboya
+
+---
+
+# License
+
+This project is developed for educational purposes as part of a Java Backend learning roadmap.
