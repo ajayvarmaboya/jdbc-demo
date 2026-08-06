@@ -3,13 +3,22 @@ import java.util.List;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+
+import com.ajay.model.Student;
+import com.ajay.dao.StudentDAO;
+import com.ajay.dao.StudentDAOImpl;
+
+import com.ajay.service.StudentService;
+import com.ajay.service.StudentServiceImpl;
+
 public class App {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        StudentService service = new StudentService();
+        StudentDAO dao = new StudentDAOImpl();
+        StudentService service = new StudentServiceImpl(dao);
 
         while (true) {
 

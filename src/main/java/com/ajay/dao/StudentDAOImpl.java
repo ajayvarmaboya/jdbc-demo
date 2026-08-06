@@ -1,8 +1,12 @@
-package com.ajay;
+package com.ajay.dao;
+import com.ajay.model.Student;
+import com.ajay.util.DBConnection;
 import java.sql.*;
 import java.util.*;
 
-public class StudentDAO {
+public class StudentDAOImpl implements StudentDAO {
+
+    @Override
     public int insertStudent(Student student) throws SQLException{
 
         Connection con=null;
@@ -40,6 +44,7 @@ public class StudentDAO {
 
     }
 
+    @Override
     public List<Student> getAllStudents() throws SQLException{
 
         String sql="select * from training";
@@ -74,7 +79,9 @@ public class StudentDAO {
         
     }
 
-    public Student getStudentById(int courseId){
+    @Override
+
+    public Student getStudentById(int courseId)throws SQLException{
 
         String sql="select * from training where courseId=?";
         
@@ -110,8 +117,8 @@ public class StudentDAO {
             
         
     }
-
-    public int updateStudent(Student student){
+    @Override
+    public int updateStudent(Student student)throws SQLException{
 
         String sql="update training set name=?, fee=?, course=?, course_name=? where courseId=?";
 
@@ -121,11 +128,11 @@ public class StudentDAO {
         )
 
         {
-            ps.setInt(1,student.getCourseId());
-            ps.setString(2,student.getName());
-            ps.setBoolean(3,student.isFee());
-            ps.setString(4,student.getCourse());
-            ps.setString(5,student.getCourseName());
+            ps.setString(1, student.getName());
+ps.setBoolean(2, student.isFee());
+ps.setString(3, student.getCourse());
+ps.setString(4, student.getCourseName());
+ps.setInt(5, student.getCourseId());
 
             int rowsAffected = ps.executeUpdate();
             return rowsAffected;
@@ -133,7 +140,9 @@ public class StudentDAO {
             throw new RuntimeException("Error occurred while updating student", e);
         }
     }
-    public int deleteStudent(int courseID){
+
+    @Override
+    public int deleteStudent(int courseID)throws SQLException{
         String sql="delete from training where courseId=?";
 
         try(

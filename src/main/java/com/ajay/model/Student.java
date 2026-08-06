@@ -1,4 +1,4 @@
-package com.ajay;
+package com.ajay.model;
 
 public class Student {
     private int courseId;

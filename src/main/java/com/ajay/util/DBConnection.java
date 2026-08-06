@@ -1,4 +1,4 @@
-package com.ajay;
+package com.ajay.util;
 import java.sql.*;
 
 public class DBConnection {
